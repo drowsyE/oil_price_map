@@ -153,12 +153,19 @@ body {
   box-shadow: 0 0 12px var(--accent-glow);
 }
 
+/* ---------- 오른쪽 컨트롤 그룹 ---------- */
+#right-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
 /* ---------- 반경 슬라이더 ---------- */
 #radius-control {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-left: auto;
   flex-shrink: 0;
 }
 
@@ -726,10 +733,35 @@ body {
     top: 12px;
     padding: 8px 12px;
     gap: 6px;
+    width: max-content; /* Shrink header to fit contents */
+    max-width: calc(100vw - 24px);
+    margin-left: 0;
+    left: 12px;
+    transform: none; /* Align to left instead of center to avoid overlay */
   }
 
   #logo h1 {
     display: none;
+  }
+
+  #right-controls {
+    position: fixed;
+    right: 12px;
+    top: 70px;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+    margin: 0;
+    z-index: 100;
+  }
+
+  #radius-control {
+    background: var(--bg-card);
+    padding: 8px 14px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    backdrop-filter: var(--blur);
+    box-shadow: var(--shadow);
   }
 
   #radius-control label {
@@ -737,7 +769,11 @@ body {
   }
 
   #radius-slider {
-    width: 60px;
+    width: 70px;
+  }
+
+  #locate-btn {
+    box-shadow: var(--shadow);
   }
 
   #side-panel {

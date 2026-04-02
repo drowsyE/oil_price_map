@@ -49,22 +49,25 @@
         <input type="text" id="location-search" placeholder="동네 / 지하철역 검색" autocomplete="off" />
       </div>
 
-      <!-- 반경 -->
-      <div id="radius-control" style="margin-left: auto;">
-        <label for="radius-slider">반경</label>
-        <input
-          type="range"
-          id="radius-slider"
-          min="1000"
-          max="5000"
-          step="500"
-          value="3000"
-        />
-        <span id="radius-value">3.0km</span>
+      <!-- 오른쪽 컨트롤 그룹 (반경, 위치) -->
+      <div id="right-controls">
+        <!-- 반경 -->
+        <div id="radius-control">
+          <label for="radius-slider">반경</label>
+          <input
+            type="range"
+            id="radius-slider"
+            min="1000"
+            max="5000"
+            step="500"
+            value="3000"
+          />
+          <span id="radius-value">3.0km</span>
+        </div>
+  
+        <!-- 현재 위치 -->
+        <button id="locate-btn" title="현재 위치로 이동">📍</button>
       </div>
-
-      <!-- 현재 위치 -->
-      <button id="locate-btn" title="현재 위치로 이동">📍</button>
     </header>
 
     <!-- ===== 줌 컨트롤 ===== -->
