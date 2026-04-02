@@ -1,0 +1,9 @@
+{
+  "description": "",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.0"
+  }
+}
