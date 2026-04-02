@@ -1,78 +1,72 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>주유소 가격 지도 — 전국 실시간 유가 정보</title>
-    <meta
-      name="description"
-      content="전국 주유소의 휘발유, 경유, LPG 가격을 지도에서 한눈에 확인하세요. 현재 위치 기반 주변 저렴한 주유소를 찾아드립니다."
-    />
 
-    <!-- Google Fonts (Pretendard 대체) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>주유소 가격 지도 — 전국 실시간 유가 정보</title>
+  <meta name="description" content="전국 주유소의 휘발유, 경유, LPG 가격을 지도에서 한눈에 확인하세요. 현재 위치 기반 주변 저렴한 주유소를 찾아드립니다." />
 
-    <!-- 스타일 -->
-    <link rel="stylesheet" href="style.css" />
-  </head>
+  <!-- Google Fonts (Pretendard 대체) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <body>
-    <!-- ===== 로딩 화면 ===== -->
-    <div id="loading">
-      <div class="loading-logo">⛽</div>
-      <div class="loading-text">주유소 가격 지도를 불러오는 중...</div>
+  <!-- Google Adsense-->>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2069592272116372"
+    crossorigin="anonymous"></script>
+
+  <!-- 스타일 -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- ===== 로딩 화면 ===== -->
+  <div id="loading">
+    <div class="loading-logo">⛽</div>
+    <div class="loading-text">주유소 가격 지도를 불러오는 중...</div>
+  </div>
+
+  <!-- ===== 지도 ===== -->
+  <div id="map"></div>
+
+  <!-- ===== 상단 헤더 ===== -->
+  <header id="header">
+    <!-- 로고 -->
+    <div id="logo">
+      <div class="logo-icon">⛽</div>
+      <h1>주유소 가격 지도</h1>
     </div>
 
-    <!-- ===== 지도 ===== -->
-    <div id="map"></div>
+    <div id="header-divider"></div>
 
-    <!-- ===== 상단 헤더 ===== -->
-    <header id="header">
-      <!-- 로고 -->
-      <div id="logo">
-        <div class="logo-icon">⛽</div>
-        <h1>주유소 가격 지도</h1>
+    <!-- 연료 탭 -->
+    <div id="fuel-tabs">
+      <button class="fuel-tab active" data-fuel="B027">휘발유</button>
+      <button class="fuel-tab" data-fuel="D047">경유</button>
+      <button class="fuel-tab" data-fuel="K015">LPG</button>
+    </div>
+
+    <!-- 위치 검색 -->
+    <div id="location-search-container" style="display: flex; align-items: center; margin-left: 8px;">
+      <input type="text" id="location-search" placeholder="동네 / 지하철역 검색" autocomplete="off" />
+    </div>
+
+    <!-- 오른쪽 컨트롤 그룹 (반경, 위치) -->
+    <div id="right-controls">
+      <!-- 반경 -->
+      <div id="radius-control">
+        <label for="radius-slider">반경</label>
+        <input type="range" id="radius-slider" min="1000" max="5000" step="500" value="3000" />
+        <span id="radius-value">3.0km</span>
       </div>
 
-      <div id="header-divider"></div>
+      <!-- 현재 위치 -->
+      <button id="locate-btn" title="현재 위치로 이동">📍</button>
+    </div>
+  </header>
 
-      <!-- 연료 탭 -->
-      <div id="fuel-tabs">
-        <button class="fuel-tab active" data-fuel="B027">휘발유</button>
-        <button class="fuel-tab" data-fuel="D047">경유</button>
-        <button class="fuel-tab" data-fuel="K015">LPG</button>
-      </div>
-
-      <!-- 위치 검색 -->
-      <div id="location-search-container" style="display: flex; align-items: center; margin-left: 8px;">
-        <input type="text" id="location-search" placeholder="동네 / 지하철역 검색" autocomplete="off" />
-      </div>
-
-      <!-- 오른쪽 컨트롤 그룹 (반경, 위치) -->
-      <div id="right-controls">
-        <!-- 반경 -->
-        <div id="radius-control">
-          <label for="radius-slider">반경</label>
-          <input
-            type="range"
-            id="radius-slider"
-            min="1000"
-            max="5000"
-            step="500"
-            value="3000"
-          />
-          <span id="radius-value">3.0km</span>
-        </div>
-  
-        <!-- 현재 위치 -->
-        <button id="locate-btn" title="현재 위치로 이동">📍</button>
-      </div>
-    </header>
-
-    <!-- ===== 줌 컨트롤 ===== -->
-    <div
-      style="
+  <!-- ===== 줌 컨트롤 ===== -->
+  <div style="
         position: fixed;
         right: 20px;
         top: 50%;
@@ -81,11 +75,8 @@
         display: flex;
         flex-direction: column;
         gap: 6px;
-      "
-    >
-      <button
-        id="zoom-in"
-        style="
+      ">
+    <button id="zoom-in" style="
           width: 36px;
           height: 36px;
           border-radius: 10px;
@@ -99,11 +90,8 @@
           align-items: center;
           justify-content: center;
           line-height: 1;
-        "
-      >+</button>
-      <button
-        id="zoom-out"
-        style="
+        ">+</button>
+    <button id="zoom-out" style="
           width: 36px;
           height: 36px;
           border-radius: 10px;
@@ -117,142 +105,141 @@
           align-items: center;
           justify-content: center;
           line-height: 1;
-        "
-      >−</button>
+        ">−</button>
+  </div>
+
+  <!-- ===== 사이드 패널 ===== -->
+  <aside id="side-panel">
+    <!-- 패널 헤더 -->
+    <div id="panel-header">
+      <div id="panel-brand-badge">GS</div>
+      <div id="panel-title-area">
+        <div id="panel-station-name">주유소 이름</div>
+        <div id="panel-address">주소 정보</div>
+      </div>
+      <button id="panel-close" title="닫기">✕</button>
     </div>
 
-    <!-- ===== 사이드 패널 ===== -->
-    <aside id="side-panel">
-      <!-- 패널 헤더 -->
-      <div id="panel-header">
-        <div id="panel-brand-badge">GS</div>
-        <div id="panel-title-area">
-          <div id="panel-station-name">주유소 이름</div>
-          <div id="panel-address">주소 정보</div>
+    <!-- 패널 바디 -->
+    <div id="panel-body">
+      <!-- 이동 정보 -->
+      <div class="info-row">
+        <div class="info-card">
+          <span class="ic-icon">🚗</span>
+          <span class="ic-value" id="travel-time">-</span>
+          <span class="ic-label">이동 시간</span>
         </div>
-        <button id="panel-close" title="닫기">✕</button>
+        <div class="info-card">
+          <span class="ic-icon">📏</span>
+          <span class="ic-value" id="travel-dist">-</span>
+          <span class="ic-label">거리</span>
+        </div>
       </div>
 
-      <!-- 패널 바디 -->
-      <div id="panel-body">
-        <!-- 이동 정보 -->
-        <div class="info-row">
-          <div class="info-card">
-            <span class="ic-icon">🚗</span>
-            <span class="ic-value" id="travel-time">-</span>
-            <span class="ic-label">이동 시간</span>
-          </div>
-          <div class="info-card">
-            <span class="ic-icon">📏</span>
-            <span class="ic-value" id="travel-dist">-</span>
-            <span class="ic-label">거리</span>
-          </div>
+      <!-- 유가 정보 -->
+      <div>
+        <div class="section-title">유가 정보</div>
+        <div class="price-grid" id="price-grid">
+          <!-- JS로 렌더링 -->
         </div>
-
-        <!-- 유가 정보 -->
-        <div>
-          <div class="section-title">유가 정보</div>
-          <div class="price-grid" id="price-grid">
-            <!-- JS로 렌더링 -->
-          </div>
-        </div>
-
-        <!-- 혼잡도 -->
-        <div>
-          <div class="section-title">현재 혼잡도</div>
-          <div class="crowding-card">
-            <div class="crowding-header">
-              <span style="font-size: 13px; color: var(--text-secondary)">지금 이 시간대</span>
-              <span class="crowding-label-text" id="crowding-label">보통</span>
-            </div>
-            <div class="crowding-bar-bg">
-              <div class="crowding-bar-fill" id="crowding-bar" style="width: 50%"></div>
-            </div>
-            <div class="crowding-note">⏱ 요일·시간대 기반 추정값입니다</div>
-          </div>
-        </div>
-
-        <!-- 서비스 -->
-        <div>
-          <div class="section-title">부대 서비스</div>
-          <div class="service-badges" id="service-badges">
-            <!-- JS로 렌더링 -->
-          </div>
-        </div>
-
-        <!-- 길찾기 -->
-        <button id="nav-btn">
-          🗺 카카오맵으로 길찾기
-        </button>
       </div>
-    </aside>
 
-    <!-- ===== 범례 ===== -->
-    <div id="legend">
-      <h3>가격 기준</h3>
-      <div class="legend-items">
-        <div class="legend-item">
-          <div class="legend-dot" style="background: #4caf50"></div>
-          저렴 (하위 33%)
+      <!-- 혼잡도 -->
+      <div>
+        <div class="section-title">현재 혼잡도</div>
+        <div class="crowding-card">
+          <div class="crowding-header">
+            <span style="font-size: 13px; color: var(--text-secondary)">지금 이 시간대</span>
+            <span class="crowding-label-text" id="crowding-label">보통</span>
+          </div>
+          <div class="crowding-bar-bg">
+            <div class="crowding-bar-fill" id="crowding-bar" style="width: 50%"></div>
+          </div>
+          <div class="crowding-note">⏱ 요일·시간대 기반 추정값입니다</div>
         </div>
-        <div class="legend-item">
-          <div class="legend-dot" style="background: #ffc107"></div>
-          보통 (중위)
+      </div>
+
+      <!-- 서비스 -->
+      <div>
+        <div class="section-title">부대 서비스</div>
+        <div class="service-badges" id="service-badges">
+          <!-- JS로 렌더링 -->
         </div>
-        <div class="legend-item">
-          <div class="legend-dot" style="background: #f44336"></div>
-          비쌈 (상위 33%)
-        </div>
+      </div>
+
+      <!-- 길찾기 -->
+      <button id="nav-btn">
+        🗺 카카오맵으로 길찾기
+      </button>
+    </div>
+  </aside>
+
+  <!-- ===== 범례 ===== -->
+  <div id="legend">
+    <h3>가격 기준</h3>
+    <div class="legend-items">
+      <div class="legend-item">
+        <div class="legend-dot" style="background: #4caf50"></div>
+        저렴 (하위 33%)
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background: #ffc107"></div>
+        보통 (중위)
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background: #f44336"></div>
+        비쌈 (상위 33%)
       </div>
     </div>
+  </div>
 
-    <!-- ===== 하단 통계 바 ===== -->
-    <div id="stats-bar">
-      <div class="stat-item">
-        <span class="stat-value" id="stat-fuel">휘발유</span>
-        <span class="stat-label">연료 종류</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <span class="stat-value" id="stat-count">-</span>
-        <span class="stat-label">주변 주유소</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <span class="stat-value" id="stat-min">-</span>
-        <span class="stat-label">최저가</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <span class="stat-value" id="stat-avg">-</span>
-        <span class="stat-label">평균가</span>
-      </div>
+  <!-- ===== 하단 통계 바 ===== -->
+  <div id="stats-bar">
+    <div class="stat-item">
+      <span class="stat-value" id="stat-fuel">휘발유</span>
+      <span class="stat-label">연료 종류</span>
     </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <span class="stat-value" id="stat-count">-</span>
+      <span class="stat-label">주변 주유소</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <span class="stat-value" id="stat-min">-</span>
+      <span class="stat-label">최저가</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <span class="stat-value" id="stat-avg">-</span>
+      <span class="stat-label">평균가</span>
+    </div>
+  </div>
 
-    <!-- ===== 토스트 ===== -->
-    <div id="toast"></div>
+  <!-- ===== 토스트 ===== -->
+  <div id="toast"></div>
 
-    <!-- ===== 스크립트 ===== -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.9.0/proj4.js"></script>
-    <script src="config.js"></script>
-    <script src="utils.js"></script>
-    <script src="api.js"></script>
-    <script src="app.js"></script>
+  <!-- ===== 스크립트 ===== -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.9.0/proj4.js"></script>
+  <script src="config.js"></script>
+  <script src="utils.js"></script>
+  <script src="api.js"></script>
+  <script src="app.js"></script>
 
-    <!-- Google Maps API -->
-    <script>
-      (function () {
-        const key = CONFIG.GOOGLE_MAPS_API_KEY;
-        if (!key || key === "YOUR_GOOGLE_MAPS_API_KEY") {
-          // API 키 없을 때: 지도 없이 Mock UI 표시
-          console.warn("Google Maps API 키가 없습니다. index.html의 config.js를 수정하세요.");
-          document.getElementById("loading").classList.add("hidden");
+  <!-- Google Maps API -->
+  <script>
+    (function () {
+      const key = CONFIG.GOOGLE_MAPS_API_KEY;
+      if (!key || key === "YOUR_GOOGLE_MAPS_API_KEY") {
+        // API 키 없을 때: 지도 없이 Mock UI 표시
+        console.warn("Google Maps API 키가 없습니다. index.html의 config.js를 수정하세요.");
+        document.getElementById("loading").classList.add("hidden");
 
-          // 지도 배경 대체
-          const mapEl = document.getElementById("map");
-          mapEl.style.background =
-            "radial-gradient(ellipse at 30% 40%, #1a2644 0%, #0f1626 60%, #07111f 100%)";
-          mapEl.innerHTML = `
+        // 지도 배경 대체
+        const mapEl = document.getElementById("map");
+        mapEl.style.background =
+          "radial-gradient(ellipse at 30% 40%, #1a2644 0%, #0f1626 60%, #07111f 100%)";
+        mapEl.innerHTML = `
             <div style="
               position:absolute; inset:0; display:flex; flex-direction:column;
               align-items:center; justify-content:center; gap:16px;
@@ -270,25 +257,26 @@
             </div>
           `;
 
-          // Mock 데이터로 패널 및 통계 시연
-          setTimeout(() => {
-            userLat = 37.5013;
-            userLng = 127.0396;
-            currentFuel = "B027";
-            currentStations = MOCK_STATIONS;
-            updateStatsBar();
-            showToast("🔔 데모 모드: config.js에 API 키를 입력하세요");
-          }, 800);
+        // Mock 데이터로 패널 및 통계 시연
+        setTimeout(() => {
+          userLat = 37.5013;
+          userLng = 127.0396;
+          currentFuel = "B027";
+          currentStations = MOCK_STATIONS;
+          updateStatsBar();
+          showToast("🔔 데모 모드: config.js에 API 키를 입력하세요");
+        }, 800);
 
-          return;
-        }
+        return;
+      }
 
-        const script = document.createElement("script");
-        script.src = `https://maps.googleapis.com/maps/api/js?key=${key}&callback=initMap&libraries=places&language=ko&region=KR`;
-        script.async = true;
-        script.defer = true;
-        document.head.appendChild(script);
-      })();
-    </script>
-  </body>
+      const script = document.createElement("script");
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${key}&callback=initMap&libraries=places&language=ko&region=KR`;
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  </script>
+</body>
+
 </html>
